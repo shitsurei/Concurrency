@@ -18,7 +18,8 @@ public class CreateThread {
 //              输出  2020-03-28 16:41:18.916 [MyThread001] INFO  Chapter1.CreateThread - hello
             }
         };
-//        启动线程
+//        启动线程，注意该方法不会导致线程的run方法立即执行，需要等待CPU分配给该线程运行的时间片（即不可控）
+//        且start方法只能调用一次，多次调用会报错
         t.start();
 
 //        方式2 匿名内部类方式创建匿名类对象实现Runnable接口，重写run方法，将该对象传入Thread类
