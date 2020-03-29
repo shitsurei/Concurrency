@@ -15,4 +15,5 @@
 ### 线程的状态
 1. Java进程是需要等待所有线程执行结束才会停止
 2. **守护线程**是一种特殊的线程，只要其他非守护线程执行结束，守护线程也会强制结束。应用包括垃圾回收器线程，Tomcat中的Acceptor和Poller线程
-1. 进程有五种状态，分别是初始态、就绪态、运行态、阻塞态和终止态；Java中的Thread类将线程分为六种状态，分别是NEW、RUNNABLE（涵盖了操作系统层面的就绪态、运行态和阻塞态）、BLOCKED、WAITING、TIMED_WAITING【这三种阻塞状态是Java中的定义】、TERMINATED
+3. 进程有五种状态，分别是初始态、就绪态、运行态、阻塞态和终止态；Java中的Thread类将线程分为六种状态，分别是NEW、RUNNABLE（涵盖了操作系统层面的就绪态、运行态和阻塞态）、BLOCKED、WAITING、TIMED_WAITING【这三种阻塞状态是Java中的定义】、TERMINATED
+## 共享
