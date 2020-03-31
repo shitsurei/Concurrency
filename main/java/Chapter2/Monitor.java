@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * 以32位虚拟机为例
  * 1 普通对象的对象头有8个字节（4个字节的Mark Word和4个字节的Klass Word）
  * Klass Word   存储指向该对象的类模板对应的class对象的指针
- * Mark Word    25bit的hashcode  4bit的年龄分代   1bit的偏向锁状态   2bit的加锁状态
+ * Mark Word    25bit的hashcode  4bit的年龄分代   1bit的偏向锁状态   2bit的加锁状态（01状态为未加锁，00状态为轻量级锁，10状态为重量级锁，11状态为GC标记）
  * 2 数组对象
  * <p>
  * 管程/监视器（Monitor）
