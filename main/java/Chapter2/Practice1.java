@@ -11,7 +11,7 @@ import java.util.Vector;
  * 习题——卖票
  */
 @Slf4j
-public class Test1 {
+public class Practice1 {
     public static void main(String[] args) {
 //        模拟多人买票
         TicketWindow ticketWindow = new TicketWindow(2000);

@@ -16,10 +16,22 @@ import java.util.concurrent.TimeUnit;
  * 偏向锁状态：
  * 未加锁的对象头：25bit保留     31bit hash码    1bit保留   1bitGC年龄    1bit偏向锁状态（0）    2bit加锁状态（01表示未加锁）
  * 加锁对象头：    54bit线程id   2bit epoch      1bit保留   1bitGC年龄    1bit偏向锁状态（1）    2bit加锁状态（01表示未加锁）
+ * 来源于Hotspot虚拟机文档 “oops/oop.hp”对Mark word字段的定义：
+ *   64 bits:
+ *   --------
+ *   unused:25 hash:31 -->| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+ *   JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+ *   PromotedObject*:61 --------------------->| promo_bits:3 ----->| (CMS promoted object)
+ *   size:64 ----------------------------------------------------->| (CMS free block)
  * <p>
  * 如果开启了偏向锁，对象创建后其Mark Word值为0x05，即最后三位是101，此时他的ThreadID、epoch、age都为0
  * 【对象创建后偏向锁是默认开启的，但开启有延迟，如果想让程序启动时立即生效，需要添加JVM参数-XX:BiasedLockingStartupDelay=0来禁用延迟】
  * 【使用JVM参数-XX:-UseBiasedLocking可以禁用偏向锁，因此会优先使用轻量级锁】
+ *
+ * 消除偏向锁的三种方式：
+ * 1 调用锁对象的hashcode方法，hashcode会覆盖对象头Mark Word位置的线程id，并将偏向锁状态置为0
+ * 2 当其他线程尝试获取偏向锁对象时，会将偏向锁状态置为0，并将加锁状态置为00，即升级为轻量级锁【注意此处必须是交替访问锁对象，否则出现竞争会直接膨胀为重量级锁】
+ * 3 调用线程的wait和notify方法，因为这两个方法只有重量级锁才有
  */
 @Slf4j
 public class BiasedLock {
