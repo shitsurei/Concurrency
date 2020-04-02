@@ -17,11 +17,11 @@ import java.util.concurrent.TimeUnit;
  * 不带参数或参数为0的wait方法会无限等待唤醒
  * 带参数的wait方法会等待一定时间后自动唤醒，其他线程也可以对其提前唤醒【此时的阻塞状态为TIMED_WAITING】
  *
- * notify方法会随机唤醒等待集合中的一个线程
+ * notify方法会随机唤醒等待集合中的一个线程（可能产生虚假唤醒）
  * notifyAll方法会唤醒等待集合中所有的线程
  */
 @Slf4j
-public class WaitNotify1 {
+public class WaitNotify {
     static final Object lock = new Object();
 
     public static void main(String[] args) throws InterruptedException {
