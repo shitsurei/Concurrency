@@ -16,4 +16,17 @@
 1. Java进程是需要等待所有线程执行结束才会停止
 2. **守护线程**是一种特殊的线程，只要其他非守护线程执行结束，守护线程也会强制结束。应用包括垃圾回收器线程，Tomcat中的Acceptor和Poller线程
 3. 进程有五种状态，分别是初始态、就绪态、运行态、阻塞态和终止态；Java中的Thread类将线程分为六种状态，分别是NEW、RUNNABLE（涵盖了操作系统层面的就绪态、运行态和阻塞态）、BLOCKED、WAITING、TIMED_WAITING【这三种阻塞状态是Java中的定义】、TERMINATED
-## 共享
+4. 线程状态转换的情况：
+    1. NEW转为RUNNABLE：调用线程对象的start方法，启动线程
+    2. RUNNABLE和WAITING之间相互装换：wait和notify方法，join同步方法，park和unpark方法
+    3. RUNNABLE和TIMED_WAITING之间相互装换：带参数的wait和notify方法，带参数的join方法，带参数的parkNanos和unpark方法，sleep方法
+    4. RUNNABLE转为BLOCKED：等待中的线程被唤醒或竞争锁失败
+    5. RUNNABLE转为TERMINATED：线程运行结束
+## 锁
+### 重量级锁和管程
+### 轻量级锁
+### 偏向锁
+## 设计模式
+### 两阶段终止
+### 保护性暂停
+### 生产者消费者
