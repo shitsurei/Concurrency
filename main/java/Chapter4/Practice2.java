@@ -19,7 +19,9 @@ public class Practice2 {
         new Philosopher("柏拉图", c2, c3).start();
         new Philosopher("亚里士多德", c3, c4).start();
         new Philosopher("赫拉克利特", c4, c5).start();
-        new Philosopher("阿基米德", c5, c1).start();
+//        new Philosopher("阿基米德", c5, c1).start();
+//        解决方案一：锁排序
+        new Philosopher("阿基米德", c1, c5).start();
         /**
          * 名称: 阿基米德
          * 状态: Chapter4.Chopstick@6f0e21b6上的BLOCKED, 拥有者: 苏格拉底

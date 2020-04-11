@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit;
  * 查询死锁的工具：
  * 1 jstack 命令行工具
  * 2 jconsole gui工具
+ *
+ * 解决方案：
+ * 1 锁排序：每个线程都按相同的顺序加锁
+ * 缺点：有可能出现饥饿现象
  */
 @Slf4j
 public class DeadLock {
