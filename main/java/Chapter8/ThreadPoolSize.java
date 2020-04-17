@@ -2,9 +2,7 @@ package Chapter8;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static java.lang.Thread.sleep;
 
@@ -24,7 +22,8 @@ public class ThreadPoolSize {
 //        任务调度线程池
         ScheduledExecutorService schedulePool = Executors.newScheduledThreadPool(2);
 //        testDelay(schedulePool);
-        testAround(schedulePool);
+//        testAround(schedulePool);
+        dealException(schedulePool);
     }
 
     //    scheduleAtFixedRate实现每隔一段时间执行一次任务【注意，任务本身执行时间超过间隔时间时不会造成任务重叠】
@@ -74,5 +73,33 @@ public class ThreadPoolSize {
                 e.printStackTrace();
             }
         }, 1, TimeUnit.SECONDS);
+    }
+
+    //    处理任务调度线程池的异常【不处理，异常不会自动抛出】
+    public static void dealException(ScheduledExecutorService schedulePool) {
+//        方式1：在任务代码中用try catch块处理
+        schedulePool.submit(() -> {
+            log.info("exception 1");
+            try {
+                int i = 1 / 0;
+            } catch (Exception e) {
+//                异常日志记录
+                log.error("error ", e);
+            }
+        });
+//        方式2：使用callable接口返回异常
+        Future<Boolean> submit = schedulePool.submit(() -> {
+            log.info("exception 2");
+            int i = 1 / 0;
+            return true;
+        });
+        try {
+            log.debug("result : {}", submit.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        schedulePool.shutdown();
     }
 }
