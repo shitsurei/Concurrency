@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
  * ThreadLocal类位于lang包下，可以用于申请和存储线程私有的内存空间及变量
  */
 @Slf4j
-public class ThreadLocal {
-    private static java.lang.ThreadLocal<String> threadLocal = new java.lang.ThreadLocal<>();
+public class ThreadLocal1 {
+    private static ThreadLocal<String> threadLocal = new ThreadLocal<>();
 
     public static void main(String[] args) {
         Thread t1 = new Thread(() -> {
